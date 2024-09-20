@@ -1,0 +1,163 @@
+<p-toast></p-toast>
+<div class="w-full">
+      <div class="card-header bg-info flex justify-content-between w-full">
+      <div class="">
+        <h5 class="m-3">Employee Details</h5>
+      </div>
+    <div class="m-2">
+        <button (click)="showDialog()"  pButton label="ADD List"></button>
+    </div>
+      </div>
+      <div class="card-body w-full">
+        <p-table [value]="employeeList" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="5">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Department</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-emp>
+                <tr>
+                    <td>{{ emp.department }}</td>
+                    <td>{{ emp.name }}</td>
+                    <td>{{ emp.email }}</td>
+                    <td>{{ emp.mobile }}</td>
+                    <td>{{ emp.city }}</td>
+                    <td>{{ emp.address }}</td>
+                    <td>{{ emp.status? 'Active':'Inactive'}}</td>
+                    <td>
+                        <i class="pi pi-pen-to-square bg-info rounded-5 p-2 mr-2" (click)="showDialog(emp)" style="font-size: 1rem;"></i>
+                        <i class="pi pi-trash bg-danger rounded-5 p-2" (click)="confirmDelete(emp.id)"  style="font-size: 1rem;"></i>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+      </div>
+
+</div>
+
+<div class="card flex justify-content-center">
+
+    <p-dialog 
+        header="Header" 
+        [(visible)]="visible" 
+        [modal]="true" 
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+        [style]="{ width: '50vw' }" 
+        [draggable]="true" 
+        [resizable]="true">
+         <div class="card-header container">
+            <div class="row col-12 bg-primary">
+                <div class="col-6 text-white">
+                    <h6>{{ editMode ? 'Edit User' : 'Add User' }}</h6>
+                </div>
+                <div class="col-6 text-end">
+                    <button pButton label="Reset" ></button>
+                </div>
+            </div>
+         </div>
+         <div class="card-body">
+            <form [formGroup]="empForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-6 ">
+                    <input type="text" formControlName="department" pInputText placeholder="Department" >
+                    <small *ngIf="department.invalid &&(department.dirty || department.touched)"
+                    class="block p-error"
+                    >
+                        <div *ngIf="department.errors?.['required']">
+                          Department is required
+                        </div>
+                    </small>
+
+                    </div>
+                    <div class="col-6">
+                        <input pInputText formControlName="name" type="text" placeholder="Name"/>
+                        <small *ngIf="name.invalid &&(name.dirty || name.touched)"
+                        class="block p-error"
+                        >
+                        <div *ngIf="name.errors?.['required']">*Name is required</div>
+                        <div *ngIf="name.errors?.['pattern']">*Correct name  required</div>
+                        </small>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-6">
+                        <p-inputNumber formControlName="mobile" [useGrouping]="false" placeholder="Mobile"/>
+                        <small *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)" class="block p-error">
+                            <div *ngIf="mobile.errors?.['required']">*Number required</div>
+                            <div *ngIf="mobile.errors?.['minlength']">*Minimum ten digits required</div>
+                            <div *ngIf="mobile.errors?.['maxlength']">*Maximum twelve digits allowed</div>
+                          </small>
+                    </div>
+                    <div class="col-6">
+                        <input pInputText formControlName="email" type="email" placeholder="Email"/>
+                        <small *ngIf="email.invalid && (email.dirty || email.touched)" class="block p-error">
+                            <div *ngIf="email.errors?.['required']">*Email is required</div>
+                            <div *ngIf="email.errors?.['email']">*Email should be valid</div>
+                          </small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" formControlName="city" pInputText placeholder="City">
+                        <small *ngIf="city.invalid && (city.dirty || city.touched)" class="block p-error" >
+                            <div *ngIf="city.errors?.['required']">*City name is required</div>
+                          </small>
+                    </div>
+                    <div class="col-6">
+                        <p-inputNumber [useGrouping]="false" formControlName="salary" placeholder="Salary"/>
+                    </div>
+                </div>
+                <div class="rwo flex">
+                    <div class="col-6 form-check-inline">
+                        <input type="radio" formControlName="gender"  class="form-check-input" value="male" name="gender" id />
+                        <label class="form-check-label">Male</label>
+                      </div>
+                      <div class="form-check col-6 form-check-inline">
+                        <input type="radio" formControlName="gender" class="form-check-input" value="female" name="gender" id />
+                        <label class="form-check-label">Female</label>
+                      </div>
+                </div>
+                <div class="row mt-3">
+                    <p-floatLabel>
+                        <textarea rows="5" cols="30" id="float-input" formControlName="address"  pInputTextarea class="w-100"></textarea>
+                        <label for="float-input">Enter address</label>
+                       
+              
+                    
+                      </p-floatLabel>
+                      <small *ngIf="address.invalid && (address.dirty || address.touched)" class="block p-error">
+                        <div *ngIf="address.errors?.['required']">*address is required</div>
+                        </small>
+                </div>
+                <div class="row">
+                    <p-checkbox 
+                    formControlName="status"
+                    [binary]="true"
+                   label="is Active ?"
+                    inputId="binary" />
+                    
+                </div>
+                <div class="row m-2">
+                    <button pButton label="Cancel" type="button" (click)="hideDialog()" class="w-full btn btn-danger"></button>
+                </div>
+                <div class="row m-2">
+                    <button pButton label="{{ editMode ? 'Update' : 'Save' }}" type="submit"  class="w-full btn btn-primary "></button>
+                </div>
+            </form>
+         </div>
+
+    </p-dialog>
+</div>
+
+<p-confirmDialog></p-confirmDialog>
+
+
+
+
