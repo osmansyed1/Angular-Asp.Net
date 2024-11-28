@@ -14,6 +14,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CommonModule } from '@angular/common';
+import { AuthServiceService } from '../../Auth/auth-service.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-employee',
   standalone: true,
@@ -51,6 +53,8 @@ constructor(private fb:FormBuilder,
   private empService:EmployeeServiceService,
   private messageService: MessageService,
   private confirmationService: ConfirmationService,
+  private authService:AuthServiceService,
+  private router:Router
 ){
 
    this.empForm=this.fb.group({
@@ -113,7 +117,13 @@ get salary()
     this.visible = true;
   }
   ngOnInit(): void {
-   this.getEmployee()
+    const log=this.authService.isLoggedIn()
+    console.log(log)
+    if (this.authService.isLoggedIn()) {
+      this.getEmployee();
+    } else {
+      this.router.navigate(['/login']); // Redirect if not logged in
+    }
   }
   hideDialog()
   {
@@ -134,7 +144,9 @@ get salary()
 
   getEmployee()
   {
+    console.log("hello")
     this.empService.getAllEmployee().subscribe(res=>{
+
       this.employeeList=res
     })
   }
@@ -214,6 +226,10 @@ get salary()
             );
         
           }
+        }
+        logout() {
+          this.authService.logout(); // Call your logout method from AuthService
+          this.router.navigate(['/login']); // Redirect to the login page
         }
 
   

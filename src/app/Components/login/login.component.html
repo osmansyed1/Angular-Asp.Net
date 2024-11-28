@@ -1,0 +1,73 @@
+<div class="flex justify-content-center align-items-center container h-100 w-10">
+    <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+        <p-card header="Login From" class="w-60 text-center">
+                <div class="col-12">
+                    <label for="" class="col-4">Username</label>
+                    <input 
+                    class="col-8"
+                    pInputText 
+            
+                    placeholder="UserName" 
+                    formControlName="username"
+                    aria-describedby="username-help" 
+                     />
+                     <small *ngIf="loginForm.controls['username'].invalid &&(loginForm.controls['username'].dirty ||loginForm.controls['username'].touched)" class="block p-error"
+                     >
+                        <div *ngIf="loginForm.controls['username'].errors?.['required']">Username is required</div>
+                     </small>
+                </div>   
+                <div class="col-12 mb-4">
+                    <label for="" class="col-4">Password</label>
+                    <input 
+                    class="col-8"
+                    pInputText 
+             
+                    type="password" 
+                    placeholder="Password"
+                    formControlName="password"
+                  
+                     />
+                     <small *ngIf="loginForm.controls['password'].invalid &&(loginForm.controls['password'].dirty ||loginForm.controls['password'].touched)" class="block p-error"
+                     >
+                        <div *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</div>
+                     </small>
+                </div> 
+                <button 
+             pButton 
+               pRipple 
+              label="Login" 
+                type="submit"
+                class="p-button-primary w-full">
+               </button> 
+               <div>Not a member? <a routerLink="/reg">Register</a></div> 
+               <div class="flex justify-content-center mt-3">
+                <button 
+                (click)="Login()" 
+                type="button" 
+                pButton 
+                label="Login with Facebook" 
+                class="p-button-secondary">
+            </button>
+            
+              </div>
+              <div class="flex justify-content-center mt-3">
+                <button 
+                    (click)="loginWithAzureAd()" 
+                    type="button" 
+                    pButton 
+                    label="Login with Azure AD" 
+                    class="p-button-info">
+                </button>
+            </div>
+              <div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+    
+        </p-card>
+    </form>
+   
+</div>
+

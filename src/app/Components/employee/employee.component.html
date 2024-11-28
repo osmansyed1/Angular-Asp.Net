@@ -4,8 +4,14 @@
       <div class="">
         <h5 class="m-3">Employee Details</h5>
       </div>
-    <div class="m-2">
-        <button (click)="showDialog()"  pButton label="ADD List"></button>
+    <div class=" flex">
+        <div class="m-2">
+            <button (click)="showDialog()"  pButton label="ADD List"></button>
+        </div>
+        <div>
+    </div>
+        <button (click)="logout()" pButton label="Logout" class="p-button-danger  m-2"></button>  
+
     </div>
       </div>
       <div class="card-body w-full">
@@ -31,9 +37,9 @@
                     <td>{{ emp.city }}</td>
                     <td>{{ emp.address }}</td>
                     <td>{{ emp.status? 'Active':'Inactive'}}</td>
-                    <td>
+                    <td class="">
                         <i class="pi pi-pen-to-square bg-info rounded-5 p-2 mr-2" (click)="showDialog(emp)" style="font-size: 1rem;"></i>
-                        <i class="pi pi-trash bg-danger rounded-5 p-2" (click)="confirmDelete(emp.id)"  style="font-size: 1rem;"></i>
+                        <i class="pi pi-trash bg-danger rounded-5 p-2 ml-2" (click)="confirmDelete(emp.id)"  style="font-size: 1rem;"></i>
                     </td>
                 </tr>
             </ng-template>

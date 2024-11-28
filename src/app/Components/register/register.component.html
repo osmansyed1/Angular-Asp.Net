@@ -1,0 +1,113 @@
+<div class="flex justify-content-center align-items-center container h-100">
+    <form [formGroup]="regForm" (ngSubmit)="regSubmit()" >
+        <p-card header="Register From" class="w-60 text-center">
+                <div class="col-12">
+                    <label for="" class="col-4">Username</label>
+                    <input 
+                    class="col-8"
+                    pInputText 
+            
+                    placeholder="UserName" 
+                    formControlName="username"
+                    aria-describedby="username-help" 
+                     />
+                     <small *ngIf="regForm.controls['username'].invalid &&(regForm.controls['username'].dirty ||regForm.controls['username'].touched)" class="block p-error"
+                     >
+                        <div *ngIf="regForm.controls['username'].errors?.['required']">Username is required</div>
+                     </small>
+                </div> 
+               
+                 <div class="col-12">
+                    <label for="email" class="col-4">Email</label>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="email"
+                      class="col-8"
+                      name="email"
+                      placeholder="Type your email"
+                    />
+                    <small
+                      *ngIf="email.invalid && (email.dirty || email.touched)"
+                      class="block p-error"
+                    >
+                      <div *ngIf="email.errors?.['required']">Email is required.</div>
+                      <div *ngIf="email.errors?.['email']">Email should be valid</div>
+                    </small>
+                  </div>
+                 
+                   
+                <div class="col-12 ">
+                    <label for="" class="col-4">Password</label>
+                    <input 
+                    class="col-8"
+                    pInputText 
+             
+                    type="password" 
+                    placeholder="Password"
+                    formControlName="password"
+                  
+                     />
+                     <small *ngIf="regForm.controls['password'].invalid &&(regForm.controls['password'].dirty ||regForm.controls['password'].touched)" class="block p-error"
+                     >
+                        <div *ngIf="regForm.controls['password'].errors?.['required']">Password is required</div>
+                     </small>
+                </div> 
+                <div class="col-row">
+                  <label >Select Role</label>
+                  <div class="col-12 flex justify-content-evenly">
+                      <button type="button" pButton (click)="setRole('Admin')" class="p-button p-button-secondary">Admin</button>
+                      <button type="button"pButton (click)="setRole('User')" class="p-button p-button-secondary">User</button>
+                  </div>
+                  <small *ngIf="regForm.controls['role'].invalid" class="block p-error">
+                      <div *ngIf="!selectedRole">Please select a role</div>
+                  </small>
+              </div>
+                <button 
+             pButton 
+               pRipple 
+              label="Submit" 
+                type="submit"
+                class="p-button-primary w-full">
+               </button>   
+               <div>Already  a member? <a routerLink="/login">Login</a></div>      
+        </p-card>
+    </form>
+</div>
+
+<!--   <div class="col-12">
+                    <label class="col-4" for="fullName">FullName</label>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="fullName"
+                      class=" col-8"
+                      name="fullName"
+                      placeholder="Type your name"
+                    />
+                    <small
+                    *ngIf="regForm.controls['fullName'].invalid && (fullName.dirty || fullName.touched)"
+                    class="block p-error"
+                  >
+                    <div *ngIf="fullName.errors?.['required']">Name is required.</div>
+                    <div *ngIf="fullName.errors?.['pattern']">Enter a valid Name</div>
+                  </small>
+                 </div> -->
+
+                 <!-- !=========== -->
+                  <!--    <div class="col-12 ">
+                    <label for="" class="col-4">Confirm Password</label>
+                    <input 
+                    class="col-8"
+                    pInputText 
+             
+                    type="password" 
+                    placeholder="Password"
+                    formControlName="password"
+                  
+                     />
+                     <small *ngIf="regForm.controls['password'].invalid &&(regForm.controls['password'].dirty ||regForm.controls['password'].touched)" class="block p-error"
+                     >
+                        <div *ngIf="regForm.controls['password'].errors?.['required']">Password is required</div>
+                     </small>
+                </div>  -->
